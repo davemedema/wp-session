@@ -22,13 +22,13 @@ class WP_Session {
   // __construct
 
   public function __construct() {
-    $this->_cookie = 'funky_session_cookie_' . COOKIEHASH;
+    $this->_cookie = 'wp_session_cookie_' . COOKIEHASH;
 
     // Activation hook
     register_activation_hook(__FILE__, array($this, 'activate'));
 
     // Actions
-    add_action('funky_cleanup_sessions', array($this, 'cleanup'  )     );
+    add_action('wp_cleanup_sessions', array($this, 'cleanup'  )     );
     add_action('shutdown',               array($this, 'save_data'), 999);
   }
 
@@ -42,8 +42,8 @@ class WP_Session {
    */
   public function activate() {
     // Cron jobs
-    wp_clear_scheduled_hook('funky_cleanup_sessions');
-    wp_schedule_event(time(), 'twicedaily', 'funky_cleanup_sessions');
+    wp_clear_scheduled_hook('wp_cleanup_sessions');
+    wp_schedule_event(time(), 'twicedaily', 'wp_cleanup_sessions');
   }
 
   /**
@@ -57,7 +57,7 @@ class WP_Session {
   /**
    * Cleanup.
    *
-   * @hook funky_cleanup_sessions
+   * @hook wp_cleanup_sessions
    * @priority 10
    */
   public function cleanup() {
@@ -70,8 +70,8 @@ class WP_Session {
     $wpdb->query($wpdb->prepare("
       DELETE a, b
       FROM {$wpdb->options} a, {$wpdb->options} b
-      WHERE a.option_name LIKE '_funky_session_%%'
-      AND b.option_name = CONCAT('_funky_session_expires_', SUBSTRING(a.option_name, CHAR_LENGTH('_funky_session_') + 1))
+      WHERE a.option_name LIKE '_wp_session_%%'
+      AND b.option_name = CONCAT('_wp_session_expires_', SUBSTRING(a.option_name, CHAR_LENGTH('_wp_session_') + 1))
       AND b.option_value < %s
     ", time()));
   }
@@ -80,7 +80,7 @@ class WP_Session {
    * Get data.
    */
   public function get_data() {
-    return get_option('_funky_session_' . $this->_user_id, array());
+    return get_option('_wp_session_' . $this->_user_id, array());
   }
 
   /**
@@ -90,8 +90,8 @@ class WP_Session {
    * @priority 999
    */
   public function save_data() {
-    $session_option         = '_funky_session_' . $this->_user_id;
-    $session_expires_option = '_funky_session_expires_' . $this->_user_id;
+    $session_option         = '_wp_session_' . $this->_user_id;
+    $session_expires_option = '_wp_session_expires_' . $this->_user_id;
 
     if (get_option($session_option) === false) {
       add_option($session_option, $this->data, null, 'no');
@@ -113,7 +113,7 @@ class WP_Session {
       // Update session if it's close to expiring
       if (time() > $this->_session_expiring) {
         $this->_set_expires();
-        update_option('_funky_session_expires_' . $this->_user_id,
+        update_option('_wp_session_expires_' . $this->_user_id,
           $this->_session_expires);
       }
     } else {
@@ -187,26 +187,26 @@ class WP_Session {
  * wp_get_session
  */
 function wp_get_session() {
-  global $funky_session;
-  return $funky_session->data;
+  global $wp_session;
+  return $wp_session->data;
 }
 
 /**
  * wp_session_save
  */
 function wp_session_save($data = array()) {
-  global $funky_session;
+  global $wp_session;
 
-  if ($data) $funky_session->data = $data;
-  $funky_session->save_data();
+  if ($data) $wp_session->data = $data;
+  $wp_session->save_data();
 }
 
 /**
  * wp_session_start
  */
 function wp_session_start() {
-  global $funky_session;
+  global $wp_session;
 
-  $funky_session = new WP_Session();
-  $funky_session->start();
+  $wp_session = new WP_Session();
+  $wp_session->start();
 }

@@ -50,6 +50,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-bumpup');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-gitadd');
   grunt.loadNpmTasks('grunt-tagrelease');
 
   // ---
@@ -57,6 +58,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['jshint']);
 
+  grunt.registerTask('r', ['release']);
   grunt.registerTask('release', function(type) {
     grunt.task.run('bumpup:' + (type || 'patch'));
     grunt.task.run('gitadd');

@@ -1,7 +1,7 @@
 {
   "name": "wp-session",
   "description": "Sessions for WordPress.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/davemedema/wp-session",
   "author": {
     "name": "Dave Medema",
@@ -24,6 +24,7 @@
     "grunt": "~0.4.1",
     "grunt-bumpup": "~0.4.2",
     "grunt-contrib-jshint": "~0.6.0",
+    "grunt-gitadd": "~0.1.1",
     "grunt-tagrelease": "~0.2.1"
   },
   "peerDependencies": {

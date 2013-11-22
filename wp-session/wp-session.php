@@ -3,7 +3,7 @@
  * Plugin Name: WP Session
  * Plugin URI: https://github.com/davemedema/wp-session
  * Description: Sessions for WordPress.
- * Version: 0.1.1
+ * Version: 0.1.2
  * Author: Dave Medema
  * Author URI: http://gofunkyfresh.com
  * License: WTFPL

@@ -7,6 +7,11 @@
  * Author: Dave Medema
  * Author URI: http://gofunkyfresh.com
  * License: WTFPL
+ *
+ * Copyright 2013 Dave Medema
+ * This work is free. You can redistribute it and/or modify it under the
+ * terms of the Do What The Fuck You Want To Public License, Version 2,
+ * as published by Sam Hocevar. See LICENSE.txt for more details.
  */
 
 if (!defined('ABSPATH')) exit;

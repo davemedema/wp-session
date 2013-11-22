@@ -1,10 +1,12 @@
 <?php
 /**
  * Plugin Name: WP Session
+ * Plugin URI: https://github.com/davemedema/wp-session
  * Description: Sessions for WordPress.
+ * Version: 0.1.1
  * Author: Dave Medema
  * Author URI: http://gofunkyfresh.com
- * Version: 1.0.0
+ * License: WTFPL
  */
 
 if (!defined('ABSPATH')) exit;
